@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Dibujo 1</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #eaf6ff; /* fondo para que un muñeco de nieve blanco se vea */
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { margin: 8px 0 12px; }
+    canvas {
+      display: block;
+      margin: 0 auto;
+      /* SIN MARCO: no border */
+      border: none;
+      /* tamaño visual (el canvas real está 400x400) */
+    }
+    button {
+      margin-top: 16px;
+      padding: 10px 16px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <h1>Dibujo 1</h1>
+
+  <!-- Canvas con tamaño 400x400 (coincide con las coordenadas que usaste) -->
+  <canvas id="lienzo" width="400" height="400"></canvas>
+
+  <br>
+  <button onclick="location.href='index.html'">Regresar al Menú</button>
+
+  <script>
+    const canvas = document.getElementById('lienzo');
+    const ctx = canvas.getContext('2d');
+
+    // --- Estado y funciones al estilo "Processing / Khan Academy" ---
+    let _fill = '#ffffff';      // valor por defecto (blanco)
+    let _stroke = '#000000';    // valor por defecto (negro)
+    let _strokeWeight = 1;
+
+    function fill(col) {
+      _fill = col;
+    }
+    function stroke(col) {
+      _stroke = col;
+    }
+    function strokeWeight(w) {
+      _strokeWeight = w;
+    }
+
+    // rect(x, y, width, height) — como Processing (corner mode)
+    function rect(x, y, w, h) {
+      ctx.save();
+      ctx.fillStyle = _fill;
+      ctx.fillRect(x, y, w, h);
+      if (_stroke) {
+        ctx.lineWidth = _strokeWeight;
+        ctx.strokeStyle = _stroke;
+        ctx.strokeRect(x, y, w, h);
+      }
+      ctx.restore();
+    }
+
+    // ellipse(x, y, width, height) — en Processing los parámetros son diámetros
+    function ellipse(x, y, w, h) {
+      const rx = w / 2;
+      const ry = h / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+      ctx.fillStyle = _fill;
+      ctx.fill();
+      if (_stroke) {
+        ctx.lineWidth = _strokeWeight;
+        ctx.strokeStyle = _stroke;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // line(x1, y1, x2, y2)
+    function line(x1, y1, x2, y2) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineWidth = _strokeWeight;
+      ctx.strokeStyle = _stroke;
+      ctx.stroke();
+      ctx.restore();
+    }
+    // -------------------------------------------------------------------
+
+    // Opcional: fijar estados por defecto parecidos a Processing/Khan
+    fill('#ffffff');      // relleno blanco (útil para un muñeco de nieve)
+    stroke('#000000');    // contorno negro
+    strokeWeight(1);
+
+    // ------------------ Aquí va TU CÓDIGO EXACTO, SIN MODIFICAR ------------------
+    rect(0,360,399,37);
+    ellipse(200, 300, 150, 150);
+    ellipse(200, 200, 100, 100);
+    ellipse(200, 120, 75, 75);
+
+    line(160,193,79,114);
+    line(247,188,314,102);
+    // ------------------------------------------------------------------------------
+
+  </script>
+</body>
+</html>

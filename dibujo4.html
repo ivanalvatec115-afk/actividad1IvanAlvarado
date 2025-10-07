@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Dibujo 4</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #eaf6ff;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { margin: 8px 0 12px; }
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border: none; /* sin borde */
+    }
+    button {
+      margin-top: 16px;
+      padding: 10px 16px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <h1>Dibujo 4</h1>
+
+  <canvas id="lienzo" width="400" height="400"></canvas>
+
+  <br>
+  <button onclick="location.href='index.html'">Regresar al Menú</button>
+
+  <script>
+    const canvas = document.getElementById('lienzo');
+    const ctx = canvas.getContext('2d');
+
+    // === Compatibilidad Khan Academy ===
+    let _fill = '#ffffff';
+    let _stroke = '#000000';
+    let _strokeWeight = 1;
+    let _useFill = true;
+
+    function background(r, g, b) {
+      ctx.save();
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
+    }
+
+    function fill(r, g, b) {
+      _fill = `rgb(${r},${g},${b})`;
+      _useFill = true;
+    }
+
+    function noFill() {
+      _useFill = false;
+    }
+
+    function stroke(col) {
+      _stroke = col;
+    }
+
+    function strokeWeight(w) {
+      _strokeWeight = w;
+    }
+
+    function rect(x, y, w, h, r = 0) {
+      ctx.save();
+      ctx.beginPath();
+      if (r > 0) {
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        ctx.lineTo(x + r, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+        ctx.lineTo(x, y + r);
+        ctx.quadraticCurveTo(x, y, x + r, y);
+      } else {
+        ctx.rect(x, y, w, h);
+      }
+      ctx.closePath();
+      if (_useFill) {
+        ctx.fillStyle = _fill;
+        ctx.fill();
+      }
+      if (_stroke) {
+        ctx.lineWidth = _strokeWeight;
+        ctx.strokeStyle = _stroke;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function ellipse(x, y, w, h) {
+      const rx = w / 2;
+      const ry = h / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+      if (_useFill) {
+        ctx.fillStyle = _fill;
+        ctx.fill();
+      }
+      if (_stroke) {
+        ctx.lineWidth = _strokeWeight;
+        ctx.strokeStyle = _stroke;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function line(x1, y1, x2, y2) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineWidth = _strokeWeight;
+      ctx.strokeStyle = _stroke;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function triangle(x1, y1, x2, y2, x3, y3) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineTo(x3, y3);
+      ctx.closePath();
+      if (_useFill) {
+        ctx.fillStyle = _fill;
+        ctx.fill();
+      }
+      if (_stroke) {
+        ctx.lineWidth = _strokeWeight;
+        ctx.strokeStyle = _stroke;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // ------------------------------------------------------------------
+    // TU CÓDIGO ORIGINAL (SIN MODIFICAR)
+    var eyesize;
+    eyesize = 15;
+    ellipse(150, 70, 60, 120);  // left ear
+    ellipse(240, 70, 60, 120);  // right ear
+
+    ellipse(200, 170, 150, 150);    // face
+
+    fill(0, 0, 0);
+    ellipse(170, 150, eyesize, eyesize);  // l
+    ellipse(230, 150, eyesize, eyesize);  // 
+
+    line(150, 200, 250, 200);   // mouth
+
+    var lenght;
+    lenght = 20;
+    noFill();
+    rect(185, 200, 15, lenght); // left tooth
+    rect(200, 200, 15, lenght); // right tooth
+    // ------------------------------------------------------------------
+  </script>
+</body>
+</html>

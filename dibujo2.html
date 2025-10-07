@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Dibujo 2</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #eaf6ff;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { margin: 8px 0 12px; }
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border: none; /* sin marco */
+    }
+    button {
+      margin-top: 16px;
+      padding: 10px 16px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <h1>Dibujo 2</h1>
+
+  <canvas id="lienzo" width="400" height="400"></canvas>
+
+  <br>
+  <button onclick="location.href='index.html'">Regresar al Menú</button>
+
+  <script>
+    const canvas = document.getElementById('lienzo');
+    const ctx = canvas.getContext('2d');
+
+    // === Compatibilidad con el estilo de Khan Academy ===
+    let _fill = '#ffffff';
+    let _stroke = '#000000';
+    let _strokeWeight = 1;
+
+    function background(r, g, b) {
+      ctx.save();
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
+    }
+
+    function fill(r, g, b) {
+      _fill = `rgb(${r},${g},${b})`;
+    }
+
+    function stroke(col) {
+      _stroke = col;
+    }
+
+    function strokeWeight(w) {
+      _strokeWeight = w;
+    }
+
+    function rect(x, y, w, h) {
+      ctx.save();
+      ctx.fillStyle = _fill;
+      ctx.fillRect(x, y, w, h);
+      if (_stroke) {
+        ctx.lineWidth = _strokeWeight;
+        ctx.strokeStyle = _stroke;
+        ctx.strokeRect(x, y, w, h);
+      }
+      ctx.restore();
+    }
+
+    function ellipse(x, y, w, h) {
+      const rx = w / 2;
+      const ry = h / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+      ctx.fillStyle = _fill;
+      ctx.fill();
+      if (_stroke) {
+        ctx.lineWidth = _strokeWeight;
+        ctx.strokeStyle = _stroke;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function line(x1, y1, x2, y2) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineWidth = _strokeWeight;
+      ctx.strokeStyle = _stroke;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ------------------------------------------------------------------
+    // TU CÓDIGO ORIGINAL (SIN MODIFICAR)
+    background(0, 238, 255);
+    // The ground
+    fill(13, 255, 0);
+    rect(0, 300, 400, 100);  
+
+    // The sun
+    fill(255, 251, 0);
+    ellipse(80, 64, 100, 100);  
+
+    // The snowman
+    fill(255, 255, 255);
+    ellipse(200, 300, 150, 150);
+    ellipse(200, 200, 100, 100);
+    ellipse(200, 120, 75, 75);
+    // ------------------------------------------------------------------
+  </script>
+</body>
+</html>
